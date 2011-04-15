@@ -22,8 +22,8 @@ class TagAdminForm(forms.ModelForm):
                 _('A tag may be no more than %s characters long.') %
                     settings.MAX_TAG_LENGTH)
         # Added by R. Moffitt
-        self.cleaned_data['name'] = tagnames[0]
-        value = tagnames[0]
+        self.cleaned_data['name'] = tag_names[0]
+        value = tag_names[0]
         # End add
         return value
 
