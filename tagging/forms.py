@@ -14,13 +14,17 @@ class TagAdminForm(forms.ModelForm):
 
     def clean_name(self):
         value = self.cleaned_data['name']
-        tag_names = parse_tag_input(value)
+        tag_names = parse_tag_input('%s' % value)
         if len(tag_names) > 1:
-            raise forms.ValidationError(_('Multiple tags were given.'))
+            raise forms.ValidationError(_('Multiple tags were given. Enclose tags with spaces in "double quotes".'))
         elif len(tag_names[0]) > settings.MAX_TAG_LENGTH:
             raise forms.ValidationError(
                 _('A tag may be no more than %s characters long.') %
                     settings.MAX_TAG_LENGTH)
+        # Added by R. Moffitt
+        self.cleaned_data['name'] = tagnames[0]
+        value = tagnames[0]
+        # End add
         return value
 
 class TagField(forms.CharField):
